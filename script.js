@@ -18,6 +18,7 @@ let myLibrary = [];
 function addBookToLibrary(title, author, pages) {
   let book = new Book(title, author, pages, false);
   myLibrary.push(book);
+  buildGrid();
 }
 
 function buildForm() {
@@ -44,6 +45,7 @@ function buildForm() {
   pagesLabel.textContent = "Pages";
   submit.setAttribute = "Add book";
   submit.textContent = "Add book";
+  submit.addEventListener("click", submitForm);
   form.appendChild(titleLabel);
   form.appendChild(titleInput);
   form.appendChild(authorLabel);
@@ -55,19 +57,30 @@ function buildForm() {
   return form;
 }
 
+function submitForm() {
+  let title = document.querySelector("#title-input").value;
+  let author = document.querySelector("#author-input").value;
+  let pages = document.querySelector("#pages-input").value;
+  addBookToLibrary(title, author, pages);
+  hideForm();
+}
+
+function hideForm() {
+  let form = document.querySelector(".new-book-form");
+  form = formDiv.removeChild(form);
+  newBookButton.textContent = "New book";
+  formShown = false;
+}
+
 function showNewBookForm() {
   if (formShown) {
-    let form = document.querySelector(".new-book-form");
-    formDiv.removeChild(form);
-    newBookButton.textContent = "New book";
-    formShown = false;
+    hideForm();
     return;
   }
   const form = buildForm();
   newBookButton.textContent = "Close";
   formDiv.appendChild(form);
   formShown = true;
-
 }
 
 newBookButton.addEventListener("click", showNewBookForm);
@@ -95,9 +108,11 @@ function buildCard(book) {
 }
 
 function buildGrid() {
+  while (cardGrid.firstChild) {
+    cardGrid.removeChild(cardGrid.lastChild);
+  }
   myLibrary.forEach((book) =>
     cardGrid.appendChild(buildCard(book))
   )
 }
 
-buildGrid();
