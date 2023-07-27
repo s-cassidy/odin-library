@@ -96,23 +96,39 @@ function buildCard(book) {
   let cardTitle = document.createElement("h2");
   let cardAuthor = document.createElement("p");
   let cardPages = document.createElement("p");
+  let deleteButton = document.createElement("button");
   cardTitle.textContent = book.title;
   cardAuthor.textContent = book.author;
   cardPages.textContent = `${book.pages} pages`;
+  deleteButton.textContent = "Delete";
+  deleteButton.setAttribute("type", "submit");
   cardText.appendChild(cardTitle);
   cardText.appendChild(cardAuthor);
   cardText.appendChild(cardPages);
+  cardButtons.appendChild(deleteButton);
+  deleteButton.addEventListener("click", deleteCard);
   card.appendChild(cardText);
   card.appendChild(cardButtons);
   return card;
+}
+
+function deleteCard(event) {
+  let cardNumber = event.target.parentNode.parentNode.getAttribute("data-number");
+  myLibrary[cardNumber] = null;
+  buildGrid();
 }
 
 function buildGrid() {
   while (cardGrid.firstChild) {
     cardGrid.removeChild(cardGrid.lastChild);
   }
-  myLibrary.forEach((book) =>
-    cardGrid.appendChild(buildCard(book))
-  )
+  let arrayLength = myLibrary.length;
+  for (let i = 0; i < arrayLength; ++i) {
+    if (myLibrary[i] !== null) {
+      let card = buildCard(myLibrary[i]);
+      card.setAttribute("data-number", i);
+      cardGrid.appendChild(card);
+    }
+  }
 }
 
