@@ -43,7 +43,6 @@ function buildForm() {
   titleLabel.textContent = "Title";
   authorLabel.textContent = "Author";
   pagesLabel.textContent = "Pages";
-  submit.setAttribute = "Add book";
   submit.textContent = "Add book";
   submit.addEventListener("click", submitForm);
   form.appendChild(titleLabel);
@@ -96,25 +95,48 @@ function buildCard(book) {
   let cardTitle = document.createElement("h2");
   let cardAuthor = document.createElement("p");
   let cardPages = document.createElement("p");
-  let deleteButton = document.createElement("button");
+  let deleteButton = document.createElement("span");
+  let deleteIcon = document.createElement("img");
+  let readButton = document.createElement("span");
+  deleteIcon.setAttribute("src", "delete.svg");
+  deleteButton.classList.add("delete");
+  readButton.classList.add("read");
+  cardButtons.classList.add("card-buttons");
   cardTitle.textContent = book.title;
   cardAuthor.textContent = book.author;
   cardPages.textContent = `${book.pages} pages`;
-  deleteButton.textContent = "Delete";
-  deleteButton.setAttribute("type", "submit");
+  readButton.textContent = "READ";
   cardText.appendChild(cardTitle);
   cardText.appendChild(cardAuthor);
   cardText.appendChild(cardPages);
+  if (book.read === true) {
+    readButton.classList.add("finished");
+  }
+  deleteButton.appendChild(deleteIcon);
+  cardButtons.appendChild(readButton);
   cardButtons.appendChild(deleteButton);
   deleteButton.addEventListener("click", deleteCard);
+  readButton.addEventListener("click", () => markRead(book));
   card.appendChild(cardText);
   card.appendChild(cardButtons);
   return card;
 }
 
 function deleteCard(event) {
-  let cardNumber = event.target.parentNode.parentNode.getAttribute("data-number");
+  console.log("I am called");
+  let cardNumber = event.target.parentNode.parentNode.parentNode.getAttribute("data-number");
+  console.log(cardNumber);
   myLibrary[cardNumber] = null;
+  buildGrid();
+}
+
+function markRead(book) {
+  if (book.read === false) {
+    book.read = true;
+  }
+  else if (book.read === true) {
+    book.read = false;
+  }
   buildGrid();
 }
 
@@ -131,4 +153,3 @@ function buildGrid() {
     }
   }
 }
-
