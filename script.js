@@ -105,7 +105,7 @@ function buildCard(book) {
   cardTitle.textContent = book.title;
   cardAuthor.textContent = book.author;
   cardPages.textContent = `${book.pages} pages`;
-  readButton.textContent = "READ";
+  readButton.textContent = "FINISHED";
   cardText.appendChild(cardTitle);
   cardText.appendChild(cardAuthor);
   cardText.appendChild(cardPages);
@@ -123,9 +123,7 @@ function buildCard(book) {
 }
 
 function deleteCard(event) {
-  console.log("I am called");
   let cardNumber = event.target.parentNode.parentNode.parentNode.getAttribute("data-number");
-  console.log(cardNumber);
   myLibrary[cardNumber] = null;
   buildGrid();
 }

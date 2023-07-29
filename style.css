@@ -2,13 +2,29 @@ body {
   margin: 0;
   padding: 0;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  background-image: url('susan-q-yin-2JIvboGLeho-unsplash.jpg');
+  background-size: cover;
 }
 
 .header {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
   padding-left: 50px; 
+  background-color: white;
+  gap: 10px;
+}
+
+.logo-icon {
+  display: inline-block;
+  width: 50px;
+}
+
+.attribution {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  opacity: 0.8;
 }
 
 .container {
@@ -58,11 +74,15 @@ button {
 }
 
 form {
+  box-sizing: border-box;
   margin: 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   width: 300px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
 }
 
 .content {
